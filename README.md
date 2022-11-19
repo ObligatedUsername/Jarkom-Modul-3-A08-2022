@@ -24,7 +24,10 @@ Melakukan konfigurasi IP pada Ostania dan juga node yang ada pada switch 2 yaitu
 Melakukan Penginstalan DHCP relay dengan menggunakan ```apt-get update``` dan ```apt-get install isc-dhcp-relay``` <br>
 
 Pada saat penginstallan terdapat pertanyaan berikut di command line, maka isikan IP address dari Westalis yang merupakan DHCP server <br>
+![alt text](https://github.com/ObligatedUsername/Jarkom-Modul-3-A08-2022/blob/main/assets/No.%202/2a.png) <br>
 
+Mengisikan network interfaces yang dikonfigurasi relay oleh DHCP. Isikan ```eth1 eth2 eth3``` dengan spasi 
+![alt text](https://github.com/ObligatedUsername/Jarkom-Modul-3-A08-2022/blob/main/assets/No.%202/2b.png) <br>
 
 ## **Nomor 3**
 **Semua client yang ada HARUS menggunakan konfigurasi IP dari DHCP Server. Client yang melalui Switch1 mendapatkan range IP dari [prefix IP].1.50 - [prefix IP].1.88 dan [prefix IP].1.120 - [prefix IP].1.155** <br>
