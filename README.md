@@ -9,11 +9,34 @@
 ## **Nomor 1**
 **Loid bersama Franky berencana membuat peta tersebut dengan kriteria WISE sebagai DNS Server, Westalis sebagai DHCP Server, Berlint sebagai Proxy Server** <br>
 
+Melakukan konfigurasi IP pada Ostania dan juga node yang ada pada switch 2 yaitu WISE, Berlint dan Westalis agar dapat mengakses internet dan melakukan penginstalan package
+
+&nbsp;&nbsp;__WISE__ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan bind9 dengan menggunakan ```apt-get update``` dan ```apt-get install bind9 -y``` <br>
+&nbsp;&nbsp;__Westalis__ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan dhcp server dengan menggunakan apt-get update dan apt-get install isc-dhcp-server -y <br>
+&nbsp;&nbsp;__Berlint__ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan proxy dengan menggunakan apt-get update dan apt-get install squid -y <br>
+
+
 ## **Nomor 2**
 **Ostania sebagai DHCP Relay** <br>
+Melakukan Penginstalan DHCP relay dengan menggunakan apt-get update dan apt-get install isc-dhcp-relay <br>
+
+Pada saat penginstallan terdapat pertanyaan berikut di command line, maka isikan IP address dari Westalis yang merupakan DHCP server <br>
+
 
 ## **Nomor 3**
 **Semua client yang ada HARUS menggunakan konfigurasi IP dari DHCP Server. Client yang melalui Switch1 mendapatkan range IP dari [prefix IP].1.50 - [prefix IP].1.88 dan [prefix IP].1.120 - [prefix IP].1.155** <br>
+
+Konfigurasikan file /etc/default/isc-dhcp-server dengan mengubah interface menjadi eth0. <br>
+
+Edit file konfigurasi isc-dhcp-server pada /etc/dhcp/dhcpd.conf <br>
+
+Restart DHCP Server.
+```
+service isc-dhcp-server restart
+```
 
 ## **Nomor 4**
 **Semua client yang ada HARUS menggunakan konfigurasi IP dari DHCP Server. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.10 - [prefix IP].3.30 dan [prefix IP].3.60 - [prefix IP].3.85** <br>
