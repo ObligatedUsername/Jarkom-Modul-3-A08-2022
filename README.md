@@ -14,14 +14,14 @@ Melakukan konfigurasi IP pada Ostania dan juga node yang ada pada switch 2 yaitu
 &nbsp;&nbsp;__WISE__ <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan bind9 dengan menggunakan ```apt-get update``` dan ```apt-get install bind9 -y``` <br>
 &nbsp;&nbsp;__Westalis__ <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan dhcp server dengan menggunakan apt-get update dan apt-get install isc-dhcp-server -y <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan dhcp server dengan menggunakan ```apt-get update``` dan ```apt-get install isc-dhcp-server -y``` <br>
 &nbsp;&nbsp;__Berlint__ <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan proxy dengan menggunakan apt-get update dan apt-get install squid -y <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lakukan Penginstalan proxy dengan menggunakan ```apt-get update``` dan ```apt-get install squid -y``` <br>
 
 
 ## **Nomor 2**
 **Ostania sebagai DHCP Relay** <br>
-Melakukan Penginstalan DHCP relay dengan menggunakan apt-get update dan apt-get install isc-dhcp-relay <br>
+Melakukan Penginstalan DHCP relay dengan menggunakan ```apt-get update``` dan ```apt-get install isc-dhcp-relay``` <br>
 
 Pada saat penginstallan terdapat pertanyaan berikut di command line, maka isikan IP address dari Westalis yang merupakan DHCP server <br>
 
@@ -32,11 +32,19 @@ Pada saat penginstallan terdapat pertanyaan berikut di command line, maka isikan
 Konfigurasikan file /etc/default/isc-dhcp-server dengan mengubah interface menjadi eth0. <br>
 
 Edit file konfigurasi isc-dhcp-server pada /etc/dhcp/dhcpd.conf <br>
+```
+subnet 10.3.1.0 netmask 255.255.255.0 {
+        range 10.3.1.50 10.3.1.88;
+        range 10.3.1.120 10.3.1.155;
+        option routers 10.3.1.1;
+        option broadcast-address 10.3.1.255;
+        option domain-name-servers 10.3.2.2;
+        default-lease-time 360;
+        max-lease-time 7200;
+}
+```
 
-Restart DHCP Server.
-```
-service isc-dhcp-server restart
-```
+Restart DHCP Server ```service isc-dhcp-server restart```
 
 ## **Nomor 4**
 **Semua client yang ada HARUS menggunakan konfigurasi IP dari DHCP Server. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.10 - [prefix IP].3.30 dan [prefix IP].3.60 - [prefix IP].3.85** <br>
@@ -54,10 +62,7 @@ subnet 10.3.3.0 netmask 255.255.255.0 {
 }
 ```
 
-Restart DCHP Server
-```
-service isc-dhcp-server restart
-```
+Restart DCHP Server ```service isc-dhcp-server restart```
 
 ## **Nomor 5**
 **Client mendapatkan DNS dari WISE dan client dapat terhubung dengan internet melalui DNS tersebut.** <br>
