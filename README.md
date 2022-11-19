@@ -43,9 +43,9 @@ service isc-dhcp-server restart
 
 Edit file konfigurasi isc-dhcp-server pada /etc/dhcp/dhcpd.conf sebagai berikut
 ```
-subnet 192.191.3.0 netmask 255.255.255.0 {
-        range 192.191.3.10 192.191.3.30;
-        range 192.191.3.60 192.191.3.85;
+subnet 10.3.3.0 netmask 255.255.255.0 {
+        range 10.3.3.10 10.3.3.30;
+        range 10.3.3.60 10.3.3.85;
         option routers 10.3.3.1;
         option broadcast-address 10.3.3.255;
         option domain-name-servers 10.3.2.2;
