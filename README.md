@@ -68,7 +68,7 @@ options {
     directory \"/var/cache/bind\";
 
     forwarders {
-    	192.168.122.1; 
+    	10.3.122.1; 
     };
 
     // dnssec-validation auto;
@@ -108,7 +108,7 @@ Edit file konfigurasi isc-dhcp-server pada /etc/dhcp/dhcpd.conf
 ```
 host Eden {
         hardware ethernet a6:e5:6b:b6:37:ed;
-        fixed-address 192.191.3.13;
+        fixed-address 10.3.3.13;
 }
 ```
 
