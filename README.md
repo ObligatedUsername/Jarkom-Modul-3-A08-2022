@@ -18,14 +18,86 @@
 ## **Nomor 4**
 **Semua client yang ada HARUS menggunakan konfigurasi IP dari DHCP Server. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.10 - [prefix IP].3.30 dan [prefix IP].3.60 - [prefix IP].3.85** <br>
 
+Edit file konfigurasi isc-dhcp-server pada /etc/dhcp/dhcpd.conf sebagai berikut
+```
+subnet 192.191.3.0 netmask 255.255.255.0 {
+        range 192.191.3.10 192.191.3.30;
+        range 192.191.3.60 192.191.3.85;
+        option routers 10.3.3.1;
+        option broadcast-address 10.3.3.255;
+        option domain-name-servers 10.3.2.2;
+        default-lease-time 720;
+        max-lease-time 7200;
+}
+```
+
+Restart DCHP Server
+```
+service isc-dhcp-server restart
+```
+
 ## **Nomor 5**
 **Client mendapatkan DNS dari WISE dan client dapat terhubung dengan internet melalui DNS tersebut.** <br>
+
+Edit file konfigurasi isc-dhcp-server pada /etc/bind/named.conf.options
+```
+options {
+    directory \"/var/cache/bind\";
+
+    forwarders {
+    	192.168.122.1; 
+    };
+
+    // dnssec-validation auto;
+    allow-query { any; }; #all host are allowed to make queries
+    auth-nxdomain no; # server will not answer authoritatively
+    listen-on-v6 { any; };
+};
+```
+
+Jalankan DCHSP server dengan melakukan fungsi Restart DHCP Server.
+```
+service isc-dhcp-server restart
+```
 
 ## **Nomor 6**
 **Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch1 selama 5 menit sedangkan pada client yang melalui Switch3 selama 10 menit. Dengan waktu maksimal yang dialokasikan untuk peminjaman alamat IP selama 115 menit.** <br>
 
+Edit file konfigurasi isc-dhcp-server pada /etc/bind/named.conf.options
+```
+default-lease-time 300;
+max-lease-time 6900;
+
+default-lease-time 600;
+max-lease-time 6900;
+
+```
+
+Jalankan DCHSP server dengan melakukan fungsi Restart DHCP Server.
+```
+service isc-dhcp-server restart
+```
+
 ## **Nomor 7**
 **Loid dan Franky berencana menjadikan Eden sebagai server untuk pertukaran informasi dengan alamat IP yang tetap dengan IP [prefix IP].3.13** <br>
+
+Edit file konfigurasi isc-dhcp-server pada /etc/dhcp/dhcpd.conf
+```
+host Eden {
+        hardware ethernet a6:e5:6b:b6:37:ed;
+        fixed-address 192.191.3.13;
+}
+```
+
+Edit network configuration yang ada di menu Configure dan tambahkan baris perintah berikut.
+```
+auto eth0
+iface eth0 inet dhcp
+hwaddress ether a6:e5:6b:b6:37:ed
+```
+
+Kemudian restart node. Testing lagi dengan command ip a, maka akan terlihat bahwa IP telah berubah.
+
 
 ## **Nomor 8**
 **SSS, Garden, dan Eden digunakan sebagai client Proxy agar pertukaran informasi dapat terjamin keamanannya, juga untuk mencegah kebocoran data.** <br>
